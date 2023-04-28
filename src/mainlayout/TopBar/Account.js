@@ -120,7 +120,7 @@ function Account() {
           <MenuItem
             onClick={handleClose}
             component={RouterLink}
-            to="/places"
+            to="/posts"
           >
             Danh sách bài đăng
           </MenuItem>

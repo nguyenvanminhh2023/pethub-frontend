@@ -9,6 +9,7 @@ import {
 import LoadingScreen from './components/LoadingScreen';
 import GuestRoute from './components/GuestRoute';
 import MainLayout from './mainlayout';
+import ApproveRoute from './components/ApproveRoute';
 
 function Routes() {
   return (
@@ -38,6 +39,16 @@ function Routes() {
                   exact
                   path="/users"
                   component={lazy(() => import('src/views/users/CustomerListView'))}
+                />
+                <Route
+                  exact
+                  path="/posts/"
+                  component={lazy(() => import('src/views/posts/PostAllView'))}
+                />
+                <ApproveRoute
+                  exact
+                  path="/posts/new"
+                  component={lazy(() => import('src/views/posts/PostCreateView'))}
                 />
               </Switch>
             </MainLayout>

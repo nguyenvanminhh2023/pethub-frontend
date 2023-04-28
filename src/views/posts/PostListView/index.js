@@ -1,17 +1,35 @@
-import React from 'react';
+import React, {
+  useState,
+  useEffect,
+  useCallback
+} from 'react';
+import { useLocation } from 'react-router-dom';
 import {
   Box,
   makeStyles,
   Button,
   colors,
   Typography,
+  Container,
+  Divider
 } from '@material-ui/core';
 import PlayForWorkOutlinedIcon from '@material-ui/icons/PlayForWorkOutlined';
+import axios from 'src/utils/axios';
+import useIsMountedRef from 'src/hooks/useIsMountedRef';
+import Page from 'src/components/Page';
+import Header from './Header';
+import Footer from './Footer';
+import Results from './Results';
+
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
 
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.dark,
     minHeight: '100%',
+    paddingTop: theme.spacing(3),
     paddingBottom: theme.spacing(3),
   },
   cover: {
@@ -56,6 +74,12 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 'bold',
     marginTop: 7,
   },
+  subtext: {
+    color: 'white',
+    fontFamily: '"Segoe UI"',
+    fontWeight: 'bold',
+    marginTop: 4
+  },
   container: {
     paddingLeft: '10%',
     marginTop: 60
@@ -77,9 +101,46 @@ const useStyles = makeStyles((theme) => ({
 
 function ProjectBrowseView() {
   const classes = useStyles();
+  const isMountedRef = useIsMountedRef();
+  const [posts, setPosts] = useState([]);
+  const [postCount, setPostCount] = useState(0);
+
+  const handleClick = () => {
+    const anchor = document.querySelector('#Main');
+
+    if (anchor) {
+      anchor.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  if (window.location.search) {
+    handleClick();
+  }
+
+  const query = useQuery();
+
+  const getPosts = useCallback(() => {
+    query.delete('fbclid');
+    if (!query.has('page')) {
+      query.append('page', 1);
+    }
+    axios
+      .get(`${process.env.REACT_APP_API}/posts?${query.toString()}`)
+      .then((response) => {
+        if (isMountedRef.current) {
+          setPostCount(response.data.postCount);
+          setPosts(response.data.posts);
+        }
+      });
+  }, [isMountedRef]);
+
+  useEffect(() => {
+    getPosts();
+  }, [getPosts]);
+
   return (
     <div
-      className={classes.root}
+      className={classes.rot}
     >
       <div
         className={classes.cover}
@@ -108,6 +169,20 @@ function ProjectBrowseView() {
           </Button>
         </Box>
       </div>
+      <Page
+        className={classes.root}
+        title="PetHub"
+        id="Main"
+      >
+        <Container maxWidth="lg">
+          <Header />
+          <Box mt={6}>
+            <Results posts={posts} getPosts={getPosts} postCount={postCount} />
+          </Box>
+        </Container>
+      </Page>
+      <Divider />
+      <Footer />
     </div>
   );
 }
