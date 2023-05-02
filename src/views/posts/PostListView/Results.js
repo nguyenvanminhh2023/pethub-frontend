@@ -54,7 +54,7 @@ function Results({
   const sortRef = useRef(null);
   const history = useHistory();
   const [openSort, setOpenSort] = useState(false);
-  const [selectedSort, setSelectedSort] = useState('Gần đây nhất');
+  const [selectedSort, setSelectedSort] = useState('Sắp xếp');
   const [mode, setMode] = useState('grid');
   const query = useQuery();
   const page = parseInt(query.get('page'), 10) || 1;
@@ -67,6 +67,10 @@ function Results({
     setOpenSort(false);
   };
 
+  const handleSortChange = (e) => {
+    setSelectedSort(e.target.value);
+  };
+
   useEffect(() => {
 
   }, []);
@@ -76,42 +80,74 @@ function Results({
     setOpenSort(false);
     switch (value) {
       case 'Đánh giá cao nhất':
-        query.append('orderBy', 'star');
-        query.append('order', 'desc');
         if (query.has('page')) {
           query.set('page', 1);
         } else {
           query.append('page', 1);
         }
-        history.push(`/?${query.toString()}`);
+        if (query.has('orderBy')) {
+          query.set('orderBy', 'star');
+        } else {
+          query.append('orderBy', 'star');
+        }
+        if (query.has('order')) {
+          query.set('order', 'desc');
+        } else {
+          query.append('order', 'desc');
+        }
+        history.replace(`/?${query.toString()}`);
         break;
       case 'Giá cao nhất':
-        query.append('orderBy', 'price');
-        query.append('order', 'desc');
         if (query.has('page')) {
           query.set('page', 1);
         } else {
           query.append('page', 1);
         }
-        history.push(`/?${query.toString()}`);
+        if (query.has('orderBy')) {
+          query.set('orderBy', 'price');
+        } else {
+          query.append('orderBy', 'price');
+        }
+        if (query.has('order')) {
+          query.set('order', 'desc');
+        } else {
+          query.append('order', 'desc');
+        }
+        history.replace(`/?${query.toString()}`);
         break;
       case 'Giá thấp nhất':
-        query.append('orderBy', 'price');
-        query.append('order', 'asc');
         if (query.has('page')) {
           query.set('page', 1);
         } else {
           query.append('page', 1);
+        }
+        if (query.has('orderBy')) {
+          query.set('orderBy', 'price');
+        } else {
+          query.append('orderBy', 'price');
+        }
+        if (query.has('order')) {
+          query.set('order', 'asc');
+        } else {
+          query.append('order', 'asc');
         }
         history.push(`/?${query.toString()}`);
         break;
       case 'Nhiều lượt xem nhất':
-        query.append('orderBy', 'views');
-        query.append('order', 'desc');
         if (query.has('page')) {
           query.set('page', 1);
         } else {
           query.append('page', 1);
+        }
+        if (query.has('orderBy')) {
+          query.set('orderBy', 'views');
+        } else {
+          query.append('orderBy', 'views');
+        }
+        if (query.has('order')) {
+          query.set('order', 'desc');
+        } else {
+          query.append('order', 'desc');
         }
         history.push(`/?${query.toString()}`);
         break;
@@ -206,6 +242,7 @@ function Results({
       <Menu
         anchorEl={sortRef.current}
         className={classes.menu}
+        onChange={handleSortChange}
         onClose={handleSortClose}
         open={openSort}
         elevation={1}
@@ -214,6 +251,7 @@ function Results({
           (option) => (
             <MenuItem
               key={option}
+              value={option}
               onClick={() => handleSortSelect(option)}
             >
               <ListItemText primary={option} />

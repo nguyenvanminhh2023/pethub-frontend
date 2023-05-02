@@ -125,11 +125,12 @@ function ProjectBrowseView() {
       query.append('page', 1);
     }
     axios
-      .get(`${process.env.REACT_APP_API}/posts?${query.toString()}`)
+      .get(`${process.env.REACT_APP_API}/posts/?${query.toString()}`)
       .then((response) => {
         if (isMountedRef.current) {
           setPostCount(response.data.postCount);
           setPosts(response.data.posts);
+          console.log(response.data.posts);
         }
       });
   }, [isMountedRef]);
