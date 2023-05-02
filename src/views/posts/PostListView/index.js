@@ -164,6 +164,7 @@ function ProjectBrowseView() {
             className={classes.inviteButton}
             variant="contained"
             startIcon={<PlayForWorkOutlinedIcon />}
+            onClick={handleClick}
           >
             Tham gia với chúng tôi
           </Button>

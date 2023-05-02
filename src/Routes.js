@@ -50,6 +50,16 @@ function Routes() {
                   path="/posts/new"
                   component={lazy(() => import('src/views/posts/PostCreateView'))}
                 />
+                <Route
+                  exact
+                  path="/posts/:pid"
+                  component={lazy(() => import('src/views/posts/PostDetailView'))}
+                />
+                <Route
+                  exact
+                  path="/users/:uid"
+                  component={lazy(() => import('src/views/users/ProfileView'))}
+                />
               </Switch>
             </MainLayout>
           )}

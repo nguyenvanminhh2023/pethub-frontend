@@ -47,6 +47,7 @@ function PostCreateForm({ className, ...rest }) {
         commune: 'Văn Môn',
         address: 'thôn Mẫn Xá',
         species: '',
+        quantity: '',
         genre: '',
         price: '',
         weight: '',
