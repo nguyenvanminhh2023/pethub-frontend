@@ -20,6 +20,7 @@ import Page from 'src/components/Page';
 import Header from './Header';
 import Footer from './Footer';
 import Results from './Results';
+import Filter from './Filter';
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -178,6 +179,9 @@ function ProjectBrowseView() {
       >
         <Container maxWidth="lg">
           <Header />
+          <Box mt={3}>
+            <Filter />
+          </Box>
           <Box mt={6}>
             <Results posts={posts} getPosts={getPosts} postCount={postCount} />
           </Box>
