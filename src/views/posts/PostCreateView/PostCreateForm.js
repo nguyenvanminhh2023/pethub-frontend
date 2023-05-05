@@ -1,5 +1,5 @@
 import React from 'react';
-// import { useHistory } from 'react-router';
+import { useHistory } from 'react-router';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import * as Yup from 'yup';
@@ -35,7 +35,7 @@ const useStyles = makeStyles(() => ({
 
 function PostCreateForm({ className, ...rest }) {
   const classes = useStyles();
-  // const history = useHistory();
+  const history = useHistory();
   const { enqueueSnackbar } = useSnackbar();
 
   return (
@@ -48,7 +48,7 @@ function PostCreateForm({ className, ...rest }) {
         address: 'thôn Mẫn Xá',
         species: '',
         quantity: '',
-        genre: '',
+        gender: '',
         price: '',
         weight: '',
         age: '',
@@ -61,7 +61,7 @@ function PostCreateForm({ className, ...rest }) {
         title: Yup.string().max(255).required('Vui lòng nhập tiêu đề'),
         species: Yup.string().oneOf(['Chó', 'Mèo', 'Chuột Hamster', 'Khác']).required('Vui lòng chọn loài'),
         address: Yup.string(),
-        genre: Yup.string().oneOf(['Đực', 'Cái']).required('Vui lòng chọn giới tính'),
+        gender: Yup.string().oneOf(['Đực', 'Cái']).required('Vui lòng chọn giới tính'),
         price: Yup.number().positive('Must be a positive').required('Vui lòng nhập giá phòng'),
         weight: Yup.number().positive('Must be a positive').required('Vui lòng nhập cân nặng'),
         age: Yup.number().positive('Must be a positive').required('Vui lòng nhập số tuổi'),
@@ -75,20 +75,18 @@ function PostCreateForm({ className, ...rest }) {
         setSubmitting
       }) => {
         axios.post(`${process.env.REACT_APP_API}/posts/new`, values)
-          .then(() => {
+          .then((response) => {
             setStatus({ success: true });
             setSubmitting(false);
             enqueueSnackbar('Đăng bài thành công', {
               variant: 'success'
             });
-            console.log('Đăng bài thành công');
-            // history.push(`/posts/${response.data.postId}`);
+            history.push(`/posts/${response.data.postId}`);
           })
           .catch((err) => {
             setErrors({ submit: err.message });
             setStatus({ success: false });
             setSubmitting(false);
-            console.log(err);
             enqueueSnackbar(err.response.data.message || 'Không thể tạo bài đăng', {
               variant: 'error'
             });
@@ -302,13 +300,13 @@ function PostCreateForm({ className, ...rest }) {
                         md={6}
                       >
                         <TextField
-                          error={Boolean(touched.genre && errors.genre)}
-                          helperText={touched.genre && errors.genre}
+                          error={Boolean(touched.gender && errors.gender)}
+                          helperText={touched.gender && errors.gender}
                           select
                           fullWidth
                           label="Giới tính"
-                          value={values.genre}
-                          onChange={(e) => setFieldValue('genre', e.target.value)}
+                          value={values.gender}
+                          onChange={(e) => setFieldValue('gender', e.target.value)}
                           variant="outlined"
                         >
                           <MenuItem value="Đực">Đực</MenuItem>

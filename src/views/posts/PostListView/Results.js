@@ -53,6 +53,13 @@ function Results({
   const classes = useStyles();
   const sortRef = useRef(null);
   const history = useHistory();
+  const sortOptions = [
+    'Gần đây nhất',
+    'Đánh giá cao nhất',
+    'Giá cao nhất',
+    'Giá thấp nhất',
+    'Nhiều lượt xem nhất'
+  ];
   const [openSort, setOpenSort] = useState(false);
   const [selectedSort, setSelectedSort] = useState('Sắp xếp');
   const [mode, setMode] = useState('grid');
@@ -247,7 +254,7 @@ function Results({
         open={openSort}
         elevation={1}
       >
-        {['Gần đây nhất', 'Đánh giá cao nhất', 'Giá cao nhất', 'Giá thấp nhất', 'Nhiều lượt xem nhất'].map(
+        {sortOptions.map(
           (option) => (
             <MenuItem
               key={option}

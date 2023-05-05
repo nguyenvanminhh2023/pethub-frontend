@@ -17,6 +17,7 @@ import Logo from 'src/components/Logo';
 import SearchIcon from '@material-ui/icons/Search';
 import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
 import Account from './Account';
+import Notifications from './Notification';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -126,7 +127,7 @@ function TopBar({
           >
             <ChatBubbleIcon />
           </IconButton>
-          {/* <Notifications /> */}
+          <Notifications />
         </>
         )}
         <Account />

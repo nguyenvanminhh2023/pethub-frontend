@@ -120,10 +120,10 @@ function Header({
               className={classes.badgeIcon}
               variant="outlined"
               color="secondary"
-              startIcon={<HomeOutlinedIcon />}
+              // startIcon={<HomeOutlinedIcon />}
               onClick={() => setAvailablePost(post.id)}
             >
-              Hết phòng
+              Hết
             </Button>
           )}
           {!post.isApproved && account.user && (account.user.role === 'admin') && (

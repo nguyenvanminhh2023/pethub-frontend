@@ -87,8 +87,8 @@ function Filter({ className, ...rest }) {
     if (queryString.has('species')) {
       setChips((oldChips) => [...oldChips, ...queryString.getAll('species')]);
     }
-    if (queryString.has('genre')) {
-      setChips((oldChips) => [...oldChips, ...queryString.getAll('genre')]);
+    if (queryString.has('gender')) {
+      setChips((oldChips) => [...oldChips, ...queryString.getAll('gender')]);
     }
     if (queryString.has('startAge')) {
       if (queryString.has('endAge')) {
@@ -129,7 +129,7 @@ function Filter({ className, ...rest }) {
         query += `&species=${chip}`;
       }
       if (selectOptions[1].options.includes(chip)) {
-        query += `&genre=${chip}`;
+        query += `&gender=${chip}`;
       }
       if (selectOptions[2].options.includes(chip)) {
         if (chip === 'Dưới 1 tuổi') {
