@@ -97,6 +97,10 @@ function PostDetailView() {
       });
   };
 
+  const extendPost = () => {
+    getPost();
+  };
+
   useEffect(() => {
     getPost();
   }, [getPost]);
@@ -111,7 +115,12 @@ function PostDetailView() {
       title={post.title}
     >
       <Container maxWidth="lg">
-        <Header post={post} approvePost={approvePost} setAvailablePost={setAvailablePost} />
+        <Header
+          post={post}
+          approvePost={approvePost}
+          setAvailablePost={setAvailablePost}
+          extendPost={extendPost}
+        />
         <Box mt={3}>
           <Tabs
             onChange={handleTabsChange}

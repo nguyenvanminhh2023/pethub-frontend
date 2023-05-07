@@ -251,7 +251,7 @@ function Brief({
                               <PetsIcon />
                             </Avatar>
                           </ListItemAvatar>
-                          <ListItemText primary="Giới tính" secondary={`${post.gender} kg`} />
+                          <ListItemText primary="Giới tính" secondary={`${post.gender}`} />
                         </ListItem>
                       </List>
                     </Grid>

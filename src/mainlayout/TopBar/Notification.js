@@ -33,13 +33,17 @@ import { getNotifications } from 'src/actions/notificationsActions';
 const iconsMap = {
   ADMIN: HourglassEmptyIcon,
   APPROVED: CheckIcon,
-  UNAVAILABLE: ClearIcon
+  UNAVAILABLE: ClearIcon,
+  EXTENDPOST: HourglassEmptyIcon,
+  EXTENDAPPROVED: CheckIcon
 };
 
 const notificationText = {
   ADMIN: 'Bài đăng cần duyệt',
-  APPROVED: 'Bài đăng đã được kích hoạt',
-  UNAVAILABLE: 'Thú cưng yêu thích đã được bán'
+  APPROVED: 'Bài đăng đã được duyệt',
+  UNAVAILABLE: 'Thú cưng yêu thích đã được bán',
+  EXTENDPOST: 'Bài đăng cần gia hạn',
+  EXTENDAPPROVED: 'Bài đăng được gia hạn'
 };
 
 const useStyles = makeStyles((theme) => ({

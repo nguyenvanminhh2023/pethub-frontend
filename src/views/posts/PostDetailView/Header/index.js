@@ -24,10 +24,10 @@ import EventAvailableIcon from '@material-ui/icons/EventAvailable';
 import EventBusyIcon from '@material-ui/icons/EventBusy';
 import ClearIcon from '@material-ui/icons/Clear';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
-import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import Report from './Report';
+import Extend from './Extend';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -61,12 +61,26 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Header({
-  post, approvePost, setAvailablePost, className, ...rest
+  post, approvePost, setAvailablePost, extendPost, className, ...rest
 }) {
   const classes = useStyles();
   const account = useSelector((state) => state.account);
   const history = useHistory();
   const [openReport, setOpenReport] = useState(false);
+  const [openExtend, setOpenExtend] = useState(false);
+
+  const handleExtendOpen = () => {
+    setOpenExtend(true);
+  };
+
+  const handleExtendClose = () => {
+    setOpenExtend(false);
+  };
+
+  const handleExtendApply = () => {
+    setOpenExtend(false);
+    extendPost(post.id);
+  };
 
   const handleReportOpen = () => {
     setOpenReport(true);
@@ -75,6 +89,7 @@ function Header({
   const handleReportClose = () => {
     setOpenReport(false);
   };
+
   const [liked, setLiked] = useState(false);
 
   useEffect(() => {
@@ -134,6 +149,17 @@ function Header({
                 onClick={() => approvePost(post.id)}
               >
                 Duyệt
+              </Button>
+            </>
+          )}
+          {account.user && (account.user.role === 'admin' || post.creator === account.user.id) && (
+            <>
+              <Button
+                variant="outlined"
+                color="secondary"
+                onClick={handleExtendOpen}
+              >
+                Gia hạn
               </Button>
             </>
           )}
@@ -240,6 +266,12 @@ function Header({
         >
           Yêu thích
         </Button>
+        <Extend
+          open={openExtend}
+          onClose={handleExtendClose}
+          onApply={handleExtendApply}
+          post={post}
+        />
         <Report
           author={post.creator}
           onApply={handleReportClose}
@@ -255,6 +287,7 @@ Header.propTypes = {
   className: PropTypes.string,
   approvePost: PropTypes.func,
   setAvailablePost: PropTypes.func,
+  extendPost: PropTypes.func,
   post: PropTypes.object.isRequired
 };
 

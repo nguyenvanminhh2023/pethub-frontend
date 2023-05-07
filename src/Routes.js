@@ -52,6 +52,11 @@ function Routes() {
                 />
                 <Route
                   exact
+                  path="/posts/:pid/edit"
+                  component={lazy(() => import('src/views/posts/PostEditView'))}
+                />
+                <Route
+                  exact
                   path="/posts/:pid"
                   component={lazy(() => import('src/views/posts/PostDetailView'))}
                 />

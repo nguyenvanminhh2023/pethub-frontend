@@ -89,6 +89,7 @@ function FilesDropzone({ className, onUploaded, ...rest }) {
 
       return axios.post('https://api.cloudinary.com/v1_1/bachhs/image/upload', formData).then((response) => {
         const { data } = response;
+        console.log(response);
         images.push(data.secure_url);
       });
     });
