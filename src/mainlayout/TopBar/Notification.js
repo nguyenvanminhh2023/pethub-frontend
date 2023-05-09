@@ -29,6 +29,7 @@ import CheckIcon from '@material-ui/icons/Check';
 import Badge from '@material-ui/core/Badge';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { getNotifications } from 'src/actions/notificationsActions';
+import PostExtendView from 'src/views/posts/PostExtendView';
 
 const iconsMap = {
   ADMIN: HourglassEmptyIcon,
@@ -63,22 +64,24 @@ const useStyles = makeStyles((theme) => ({
 function Notifications() {
   const classes = useStyles();
   const notifications = useSelector((state) => state.notifications.notifications);
+  const reverseNotifications = [];
   // const count = notifications.filter((noti) => !noti.seen).length;
   const notiIds = [];
   for (let i = 0; i < notifications.length; i++) {
     if (!notifications[i].seen) {
       notiIds.push(notifications[i].id);
     }
+    reverseNotifications.push(notifications[notifications.length - 1 - i]);
   }
-  console.log(notiIds);
   const [
     countUnseenNoti,
     setCountUnseenNoti
   ] = useState(notifications.filter((noti) => !noti.seen).length);
-  console.log(countUnseenNoti);
   const ref = useRef(null);
   const dispatch = useDispatch();
   const [isOpen, setOpen] = useState(false);
+  // const [extendOpen, setExtendOpen] = useState(false);
+  const [idOpen, setIdOpen] = useState();
 
   const handleOpen = () => {
     setOpen(true);
@@ -86,6 +89,15 @@ function Notifications() {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  // const handleExtendOpen = () => {
+  //   setExtendOpen(true);
+  //   console.log('extendOpen');
+  // };
+
+  const handleExtendClose = () => {
+    setIdOpen(0);
   };
 
   useEffect(() => {
@@ -154,31 +166,41 @@ function Notifications() {
             >
               {notifications.map((notification) => {
                 const Icon = iconsMap[notification.type];
-
                 return (
-                  <ListItem
-                    className={classes.listItem}
-                    component={RouterLink}
-                    divider
-                    onClick={handleClose}
-                    key={notification.id}
-                    to={`/posts/${notification.post}`}
-                  >
-                    <ListItemAvatar>
-                      <Avatar
-                        className={classes.icon}
-                      >
-                        <SvgIcon fontSize="small">
-                          <Icon />
-                        </SvgIcon>
-                      </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText
-                      primary={notificationText[notification.type]}
-                      primaryTypographyProps={{ variant: 'subtitle2', color: 'textPrimary' }}
-                      secondary={notification.title}
+                  <>
+                    <ListItem
+                      className={classes.listItem}
+                      {...(notification.type !== 'EXTENDPOST' ? { component: RouterLink } : {})}
+                      // component={RouterLink}
+                      divider
+                      onClick={notification.type !== 'EXTENDPOST' ? handleClose : () => {
+                        // handleExtendOpen();
+                        setIdOpen(notification.id);
+                      }}
+                      key={notification.id}
+                      {...(notification.type !== 'EXTENDPOST' ? { to: `/posts/${notification.post}` } : {})}
+                    >
+                      <ListItemAvatar>
+                        <Avatar
+                          className={classes.icon}
+                        >
+                          <SvgIcon fontSize="small">
+                            <Icon />
+                          </SvgIcon>
+                        </Avatar>
+                      </ListItemAvatar>
+                      <ListItemText
+                        primary={notificationText[notification.type]}
+                        primaryTypographyProps={{ variant: 'subtitle2', color: 'textPrimary' }}
+                        secondary={notification.title}
+                      />
+                    </ListItem>
+                    <PostExtendView
+                      open={notification.id === idOpen}
+                      notification={notification}
+                      onClose={handleExtendClose}
                     />
-                  </ListItem>
+                  </>
                 );
               })}
             </List>

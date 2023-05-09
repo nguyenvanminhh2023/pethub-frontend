@@ -56,6 +56,7 @@ function PostCreateForm({ className, ...rest }) {
         description: '',
         images: [],
         endDate: moment(new Date()).add(1, 'weeks'),
+        extending: false,
       }}
       validationSchema={Yup.object().shape({
         title: Yup.string().max(255).required('Vui lòng nhập tiêu đề'),

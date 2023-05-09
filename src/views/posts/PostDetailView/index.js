@@ -74,7 +74,8 @@ function PostDetailView() {
         });
         getPost();
       })
-      .catch(() => {
+      .catch((err) => {
+        console.log(err);
         enqueueSnackbar('Duyệt bài không thành công', {
           variant: 'error'
         });
