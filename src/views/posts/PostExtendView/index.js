@@ -9,6 +9,7 @@ import {
   Link,
   Button
 } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
 import axios from 'src/utils/axios';
 import { useHistory } from 'react-router';
@@ -122,42 +123,58 @@ function PostExtendView({
           </Typography>
         </Box>
       </Box>
-      <Box
-        pb={1}
-        px={3}
-        className={classes.box}
-      >
-        <Typography
-          color="textPrimary"
-          variant="body2"
+      {post.endDate !== notification.extendDate ? (
+        <>
+          <Box
+            pb={1}
+            px={3}
+            className={classes.box}
+          >
+            <Typography
+              color="textPrimary"
+              variant="body2"
+            >
+              Ngày hết hạn cũ:
+              {' '}
+              {`${new Date(post.endDate).getDate()}/${(new Date(post.endDate).getMonth() + 1)}/${new Date(post.endDate).getFullYear()}`}
+            </Typography>
+            <Typography
+              color="textPrimary"
+              variant="body2"
+            >
+              Ngày hết hạn mới:
+              {' '}
+              {`${new Date(notification.extendDate).getDate()}/${(new Date(notification.extendDate).getMonth() + 1)}/${new Date(notification.extendDate).getFullYear()}`}
+            </Typography>
+          </Box>
+          <Box
+            mt={3}
+            p={3}
+          >
+            <Button
+              variant="contained"
+              fullWidth
+              color="primary"
+              type="submit"
+              onClick={handleApply}
+            >
+              Duyệt
+            </Button>
+          </Box>
+        </>
+      ) : (
+        <Alert
+          severity="success"
         >
-          Ngày hết hạn cũ:
-          {' '}
-          {`${new Date(post.endDate).getDate()}/${(new Date(post.endDate).getMonth() + 1)}/${new Date(post.endDate).getFullYear()}`}
-        </Typography>
-        <Typography
-          color="textPrimary"
-          variant="body2"
-        >
-          Ngày hết hạn mới:
-          {' '}
-          {`${new Date(notification.extendDate).getDate()}/${(new Date(notification.extendDate).getMonth() + 1)}/${new Date(notification.extendDate).getFullYear()}`}
-        </Typography>
-      </Box>
-      <Box
-        mt={3}
-        p={3}
-      >
-        <Button
-          variant="contained"
-          fullWidth
-          color="primary"
-          type="submit"
-          onClick={handleApply}
-        >
-          Duyệt
-        </Button>
-      </Box>
+          <Typography
+            align="center"
+            variant="subtitle2"
+            color="textSecondary"
+          >
+            Bài đăng đã được gia hạn
+          </Typography>
+        </Alert>
+      )}
     </Dialog>
   );
 }

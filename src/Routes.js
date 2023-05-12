@@ -65,6 +65,11 @@ function Routes() {
                   path="/users/:uid"
                   component={lazy(() => import('src/views/users/ProfileView'))}
                 />
+                <Route
+                  exact
+                  path="/chat/:uid"
+                  component={lazy(() => import('src/views/chat/ChatView'))}
+                />
               </Switch>
             </MainLayout>
           )}
