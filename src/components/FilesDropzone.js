@@ -68,9 +68,10 @@ function FilesDropzone({ className, onUploaded, ...rest }) {
   const [files, setFiles] = useState([]);
 
   const handleDrop = useCallback((acceptedFiles) => {
-    setFiles(acceptedFiles.map((file) => Object.assign(file, {
-      preview: URL.createObjectURL(file)
-    })));
+    const newFiles = acceptedFiles.map((file) => Object.assign(file, {
+      preview: URL.createObjectURL(file),
+    }));
+    setFiles((prevFiles) => prevFiles.concat(newFiles));
   }, []);
 
   const handleRemoveAll = () => {
@@ -82,12 +83,12 @@ function FilesDropzone({ className, onUploaded, ...rest }) {
     const uploaders = files.map((file) => {
       const formData = new FormData();
       formData.append('file', file);
-      formData.append('folder', 'places');
-      formData.append('upload_preset', 'qx52o297');
-      formData.append('api_key', '129679773661522');
+      formData.append('folder', 'posts');
+      formData.append('upload_preset', 'zel7l2cz');
+      formData.append('api_key', '455948869417824');
       formData.append('timestamp', (Date.now() / 1000) || 0);
 
-      return axios.post('https://api.cloudinary.com/v1_1/bachhs/image/upload', formData).then((response) => {
+      return axios.post('https://api.cloudinary.com/v1_1/nguyenvanminhh2023/image/upload', formData).then((response) => {
         const { data } = response;
         console.log(response);
         images.push(data.secure_url);

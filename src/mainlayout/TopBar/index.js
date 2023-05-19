@@ -121,7 +121,7 @@ function TopBar({
         {account.user && (
         <>
           <IconButton
-            href={`/chat/${account.user.id}`}
+            href="/chat"
             className={classes.iconChat}
             color="inherit"
           >

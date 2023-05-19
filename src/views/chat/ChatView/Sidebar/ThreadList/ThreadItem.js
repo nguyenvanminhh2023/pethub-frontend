@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useParams, Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import {
@@ -36,8 +36,10 @@ function ThreadItem({
 }) {
   const classes = useStyles();
   const account = useSelector((state) => state.account);
-  const { uid } = useParams();
-  const contact = thread.recipients[0] === uid ? thread.recipients[0] : thread.recipients[1];
+  // const { uid } = useParams();
+  const recipient0 = thread.recipients[0];
+  const recipient1 = thread.recipients[1];
+  const contact = account.user.id === recipient0.id ? recipient1 : recipient0;
   const lastMessageInfo = `${thread.lastestMessage.sender === account.user.id ? 'Bạn:' : ''} ${thread.lastestMessage.body}`;
 
   return (
